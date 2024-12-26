@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="daprdesigner" nsURI="http://io.dapr/daprtools/daprdesigner"
+    nsPrefix="daprdesigner">
+  <eClassifiers xsi:type="ecore:EClass" name="Namespace">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Trustdomain">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BuildingBlock" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="#//Namespace"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trustDomain" eType="#//Trustdomain"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Services" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="apps" upperBound="-1" eType="#//App"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="App">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="#//Namespace"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trustDomain" eType="#//Trustdomain"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="accessControl" eType="#//AppAccessControl"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AppAccessControl">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trustDomain" eType="#//Trustdomain"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
+        eType="#//AppPolicy" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AppPolicy">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="app" eType="#//App"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trustDomain" eType="#//Trustdomain"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="#//Namespace"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operations" upperBound="-1"
+        eType="#//Operation" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Operation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="protocol" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operationName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="verbs" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="action" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceInvocation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceApp" eType="#//App"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetApp" eType="#//App"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PubSub" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bindings" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Jobs" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Configuration" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Workflow" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Actors" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Secrets" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StateManagement" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DistributedLocks" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CryptoGraphy" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

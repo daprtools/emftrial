@@ -1,0 +1,112 @@
+@namespace(
+	uri="http://io.dapr/daprtools/daprdesigner",
+	prefix="daprdesigner")
+package daprdesigner;
+
+class Namespace{
+	
+	attr String name;
+}
+class Trustdomain{
+	
+	attr String name;
+}
+
+abstract class BuildingBlock {
+	
+	ref Namespace namespace;
+	ref Trustdomain trustDomain;
+}
+
+class Services extends BuildingBlock{
+	
+	ref App[*] apps;
+}
+
+class App {
+	attr String appId;
+	ref Namespace namespace;
+	ref Trustdomain trustDomain;
+	val AppAccessControl accessControl;
+	
+	
+}
+class AppAccessControl{
+	
+	attr String defaultAction;
+	ref  Trustdomain trustDomain;
+	val AppPolicy[*] policies;
+}
+
+class AppPolicy {
+  ref App app;
+  attr String defaultAction;
+  ref Trustdomain trustDomain;
+  ref Namespace namespace;
+  val Operation[*] operations;
+  
+  	
+}
+
+class Operation{
+	attr String protocol;
+	attr String operationName;
+	attr String[*] verbs;
+	attr String action;
+}
+
+class ServiceInvocation {
+	
+	ref App sourceApp;
+	ref App targetApp;
+	
+	
+}
+
+
+
+class PubSub extends BuildingBlock{
+	
+	attr String appID;
+}
+class Bindings extends BuildingBlock{
+	
+	attr String appID;
+}
+class Jobs extends BuildingBlock{
+	
+	attr String appID;
+}
+class Configuration extends BuildingBlock{
+	
+	attr String appID;
+}
+class Workflow extends BuildingBlock{
+	
+	attr String appID;
+}
+class Actors extends BuildingBlock{
+	
+	attr String appID;
+}
+class Secrets extends BuildingBlock{
+	
+	attr String appID;
+}
+class StateManagement extends BuildingBlock{
+	
+	attr String appID;
+}
+
+class DistributedLocks extends BuildingBlock{
+	
+	attr String appID;
+}
+class CryptoGraphy extends BuildingBlock{
+	
+	attr String appID;
+}
+
+
+
+

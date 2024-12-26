@@ -1,7 +1,9 @@
 @namespace(
-	uri="http://io.dapr/daprtools/daprdesigner",
+	uri="http://dapr.io/daprtools/daprdesigner",
 	prefix="daprdesigner")
 package daprdesigner;
+
+// Base classes
 
 class Namespace{
 	
@@ -18,8 +20,11 @@ abstract class BuildingBlock {
 	ref Trustdomain trustDomain;
 }
 
+
+// Service Invocation and Apps 
 class Services extends BuildingBlock{
 	
+	readonly attr  String name = "Services Group";
 	ref App[*] apps;
 }
 
@@ -55,20 +60,20 @@ class Operation{
 	attr String action;
 }
 
-class ServiceInvocation {
-	
-	ref App sourceApp;
-	ref App targetApp;
-	
-	
-}
-
+// Message Broker Configurations 
 
 
 class PubSub extends BuildingBlock{
 	
-	attr String appID;
+	readonly attr  String name = "Message Brokers";
+	ref BrokerComponents[*] mbrokers;
 }
+
+abstract class BrokerComponents{
+	
+	
+}
+
 class Bindings extends BuildingBlock{
 	
 	attr String appID;

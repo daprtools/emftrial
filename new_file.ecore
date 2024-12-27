@@ -21,8 +21,33 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="appId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="#//Namespace"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="trustDomain" eType="#//Trustdomain"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" eType="#//AppConfiguration"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AppConfiguration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="apiVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" defaultValueLiteral="dapr.io/v1alpha1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" defaultValueLiteral="Configuration"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="metadata_name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="metadata_namespace" eType="#//Namespace"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="accessControl" eType="#//AppAccessControl"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="apiControl" eType="#//APIAccessControl"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="middlewareConfiguration"
+        eType="#//MiddlewareConfiguration" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="APIAccessControl">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allowedAPIs" upperBound="-1"
+        eType="#//API" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deniedAPIs" upperBound="-1"
+        eType="#//API" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="API">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="api_name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="api_version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="protocol" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AppAccessControl">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -45,6 +70,16 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="action" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MiddlewareConfiguration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incomingHandler" upperBound="-1"
+        eType="#//HttpHandler" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingHandler" upperBound="-1"
+        eType="#//HttpHandler" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HttpHandler">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="apiVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false" defaultValueLiteral="dapr.io/v1alpha1"/>
@@ -53,33 +88,42 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="auth" eType="#//SecretStore"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="metadata_name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="metadata_namespace" eType="#//Namespace"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="spec_metadata" upperBound="-1"
-        eType="#//SpecMetadata" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="spec" eType="#//ComponentSpec"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scopes" upperBound="-1"
         eType="#//App"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComponentSpec">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ignoreErrors" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="initTimeout" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="spec_metadata" upperBound="-1"
+        eType="#//SpecMetadata" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SpecMetadata">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isFetchedFromSecret" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isFetchedFromEnvironment"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="secretKeyRefName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="secretKeyRefKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="envRef" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SecretStore" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="HasiCorpVault" eSuperTypes="#//Component #//SecretStore">
+  <eClassifiers xsi:type="ecore:EClass" name="SecretStore" abstract="true" eSuperTypes="#//Component"/>
+  <eClassifiers xsi:type="ecore:EClass" name="HashicorpVault" eSuperTypes="#//SecretStore">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="spec_type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false" defaultValueLiteral="secretstores.aws.parameterstore"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="spec_version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false" defaultValueLiteral="v1"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageBroker" abstract="true" eSuperTypes="#//Component"/>
   <eClassifiers xsi:type="ecore:EClass" name="PubSub" eSuperTypes="#//BuildingBlock">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false" defaultValueLiteral="Message Brokers"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mbrokers" upperBound="-1"
-        eType="#//BrokerComponents"/>
+        eType="#//MessageBroker"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="BrokerComponents" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Bindings" eSuperTypes="#//BuildingBlock">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="appID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>

@@ -32,10 +32,38 @@ class App {
 	attr String appId;
 	ref Namespace namespace;
 	ref Trustdomain trustDomain;
-	val AppAccessControl accessControl;
+	val AppConfiguration configuration;
 	
 	
 }
+
+class AppConfiguration{
+	readonly attr String apiVersion = "dapr.io/v1alpha1";
+	readonly attr String kind = "Configuration";
+	attr String metadata_name;
+	ref Namespace metadata_namespace;
+	val AppAccessControl[0..1] accessControl;
+	val APIAccessControl[0..1] apiControl;
+	val MiddlewareConfiguration[0..1] middlewareConfiguration;
+}
+
+// API Configuration
+
+class APIAccessControl{
+	val API[*] allowedAPIs;
+	val API[*] deniedAPIs;
+}
+
+class API {
+	attr String api_name;
+	attr String api_version;
+	attr String protocol;
+}
+
+
+
+// AccessControl configuration
+
 class AppAccessControl{
 	
 	attr String defaultAction;
@@ -60,6 +88,24 @@ class Operation{
 	attr String action;
 }
 
+// Middleware Configuration
+
+class MiddlewareConfiguration{
+	
+	val HttpHandler[*] incomingHandler; // httpPipeline
+	val HttpHandler[*] outgoingHandler; // appHttpPipeline  
+}
+
+class HttpHandler{
+	
+	attr String name;
+	attr String type;
+}
+
+
+// Components Deny list 
+
+
 //Component Definitions
 
 
@@ -70,17 +116,25 @@ abstract class Component {
 	ref SecretStore auth;
 	attr String metadata_name;
 	ref Namespace metadata_namespace;
-	val SpecMetadata[*] spec_metadata; 
+	val ComponentSpec spec; 
 	ref App[*] scopes;
 		
+}
+
+class ComponentSpec{
+	attr boolean ignoreErrors;
+	attr String initTimeout;
+	val SpecMetadata[*] spec_metadata; 
 }
 
 class SpecMetadata{
 	attr String name;
 	attr String value;
 	attr boolean isFetchedFromSecret = false;
+	attr boolean isFetchedFromEnvironment = false;
 	attr String secretKeyRefName;
 	attr String secretKeyRefKey;
+	attr String envRef;
 }
 
 
@@ -99,17 +153,20 @@ class HashicorpVault extends SecretStore{
 
 // Message Broker Configurations 
 
+abstract class MessageBroker extends Component{
+	
+}
+
+
+
 
 class PubSub extends BuildingBlock{
 	
 	readonly attr  String name = "Message Brokers";
-	ref BrokerComponents[*] mbrokers;
+	ref MessageBroker[*] mbrokers;
 }
 
-abstract class BrokerComponents{
-	
-	
-}
+
 
 class Bindings extends BuildingBlock{
 	

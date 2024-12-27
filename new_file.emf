@@ -45,7 +45,45 @@ class AppConfiguration{
 	val AppAccessControl[0..1] accessControl;
 	val APIAccessControl[0..1] apiControl;
 	val MiddlewareConfiguration[0..1] middlewareConfiguration;
+	val LoggingConfiguration[0..1] loggingConfiguration;
+	val NameResolutionConfiguration[0..1] nameResolutionConfiguration;
+	val SecretsConfiguration[0..1] secretsConfiguration;
+	attr String[*] componentsDenyList;
+	
 }
+//Logging configuration
+
+class LoggingConfiguration{
+	attr boolean enabled = true;
+	attr boolean obfuscateURLs = false;
+	attr boolean omitHealthChecks = true;
+}
+//Name Resolution Configuration
+
+class NameResolutionConfiguration{
+	attr String componentName;
+	attr String componentVersion;
+	attr String configurationKey;
+	attr String configurationValue;
+	
+}
+//Secrets configuration
+
+class SecretsConfiguration
+{
+    val SecretsList[*] allowedList;
+    val SecretsList[*] deniedList;	
+	
+}
+
+class SecretsList{
+	attr String storeName;
+	attr boolean defaultAccess = true;
+	attr String[+] secrets;
+	
+}
+
+
 
 // API Configuration
 

@@ -60,6 +60,43 @@ class Operation{
 	attr String action;
 }
 
+//Component Definitions
+
+
+abstract class Component {
+	
+	readonly attr String apiVersion = "dapr.io/v1alpha1";
+	readonly attr String kind = "Component";
+	ref SecretStore auth;
+	attr String metadata_name;
+	ref Namespace metadata_namespace;
+	val SpecMetadata[*] spec_metadata; 
+	ref App[*] scopes;
+		
+}
+
+class SpecMetadata{
+	attr String name;
+	attr String value;
+	attr boolean isFetchedFromSecret = false;
+	attr String secretKeyRefName;
+	attr String secretKeyRefKey;
+}
+
+
+// Secret Stores 
+
+abstract class SecretStore extends Component  {
+	
+	
+}
+
+class HashicorpVault extends SecretStore{
+	
+	readonly attr String spec_type = "secretstores.aws.parameterstore";
+	readonly attr String spec_version = "v1";
+}
+
 // Message Broker Configurations 
 
 

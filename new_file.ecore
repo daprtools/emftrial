@@ -37,6 +37,55 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="middlewareConfiguration"
         eType="#//MiddlewareConfiguration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loggingConfiguration" eType="#//LoggingConfiguration"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nameResolutionConfiguration"
+        eType="#//NameResolutionConfiguration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secretsConfiguration" eType="#//SecretsConfiguration"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="metricsConfiguration" eType="#//MetricsConfiguration"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tracingConfiguration" eType="#//TracingConfiguration"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentsDenyList" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LoggingConfiguration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enabled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="obfuscateURLs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="omitHealthChecks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NameResolutionConfiguration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="configurationKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="configurationValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SecretsConfiguration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allowedList" upperBound="-1"
+        eType="#//SecretsList" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deniedList" upperBound="-1"
+        eType="#//SecretsList" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SecretsList">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="storeName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultAccess" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="secrets" lowerBound="1"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MetricsConfiguration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enabled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="latencyDistributionBuckets"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="http_increasedCardinality"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="http_pathMatching" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="http_excludeVerbs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="APIAccessControl">
     <eStructuralFeatures xsi:type="ecore:EReference" name="allowedAPIs" upperBound="-1"
@@ -80,6 +129,15 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TracingConfiguration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="samplingRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stdout" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="otel_endPointAddress" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="otel_isSecure" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="otel_protocol" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zipkin_endPointAddress"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="apiVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false" defaultValueLiteral="dapr.io/v1alpha1"/>
@@ -109,6 +167,30 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="secretKeyRefName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="secretKeyRefKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="envRef" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubscriptionConfiguration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="apiVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" defaultValueLiteral="dapr.io/v2alpha1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" defaultValueLiteral="Subscription"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="topicName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="routeRules" upperBound="-1"
+        eType="#//RouteRules" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pubsubname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="deadLetterTopic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bulkSubscribe_enabled"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bulkSubscribe_maxMessagesCount"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bulkSubscribe_maxAwaitDurationMs"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scopes" upperBound="-1"
+        eType="#//App"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RouteRules">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="match" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SecretStore" abstract="true" eSuperTypes="#//Component"/>
   <eClassifiers xsi:type="ecore:EClass" name="HashicorpVault" eSuperTypes="#//SecretStore">

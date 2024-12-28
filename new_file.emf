@@ -3,6 +3,7 @@
 	prefix="daprdesigner")
 package daprdesigner;
 
+
 // Base classes
 
 class Namespace{
@@ -48,6 +49,8 @@ class AppConfiguration{
 	val LoggingConfiguration[0..1] loggingConfiguration;
 	val NameResolutionConfiguration[0..1] nameResolutionConfiguration;
 	val SecretsConfiguration[0..1] secretsConfiguration;
+	val MetricsConfiguration[0..1] metricsConfiguration;
+	val TracingConfiguration[0..1] tracingConfiguration;
 	attr String[*] componentsDenyList;
 	
 }
@@ -83,7 +86,15 @@ class SecretsList{
 	
 }
 
+// Metrics Configuration
 
+class MetricsConfiguration{
+	attr boolean enabled;
+	attr int[*] latencyDistributionBuckets;
+	attr boolean http_increasedCardinality;
+	attr String[*] http_pathMatching;
+	attr boolean http_excludeVerbs;
+}
 
 // API Configuration
 
@@ -141,7 +152,16 @@ class HttpHandler{
 }
 
 
-// Components Deny list 
+//Tracing Configuration
+
+class TracingConfiguration{
+	attr String samplingRate;
+	attr boolean stdout;
+	attr String otel_endPointAddress;
+	attr boolean otel_isSecure;
+	attr String otel_protocol;
+	attr String zipkin_endPointAddress;
+} 
 
 
 //Component Definitions
@@ -173,6 +193,28 @@ class SpecMetadata{
 	attr String secretKeyRefName;
 	attr String secretKeyRefKey;
 	attr String envRef;
+}
+
+// Subscription Configuration 
+
+class SubscriptionConfiguration{
+	readonly attr String apiVersion = "dapr.io/v2alpha1";
+	readonly attr String kind = "Subscription";
+	attr String name;
+	attr String topicName;
+	val RouteRules[*] routeRules;
+	attr String pubsubname;
+	attr String deadLetterTopic;
+	attr boolean bulkSubscribe_enabled;
+	attr String bulkSubscribe_maxMessagesCount;
+	attr String bulkSubscribe_maxAwaitDurationMs;
+	ref App[*] scopes;
+	
+}
+
+class RouteRules{
+	attr String match;
+	attr String path;
 }
 
 

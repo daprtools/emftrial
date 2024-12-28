@@ -218,6 +218,25 @@
     <eLiterals name="COMPONENT_INBOUND" value="3"/>
     <eLiterals name="COMPONENT_OUTBOUND" value="4"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HTTPEndPoint">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="apiVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" defaultValueLiteral="dapr.io/v1alpha1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" defaultValueLiteral="HTTPEndpoint"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="auth" eType="#//SecretStore"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="metadata_name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scopes" upperBound="-1"
+        eType="#//App"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="headers" upperBound="-1"
+        eType="#//SpecMetadata" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clientTLS_rootCA" eType="#//SpecMetadata"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clientTLS_certificate"
+        eType="#//SpecMetadata" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clientTLS_privateKey" eType="#//SpecMetadata"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="apiVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false" defaultValueLiteral="dapr.io/v1alpha1"/>

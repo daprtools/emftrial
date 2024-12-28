@@ -164,6 +164,105 @@ class TracingConfiguration{
 } 
 
 
+// Subscription Configuration 
+
+class SubscriptionConfiguration{
+	readonly attr String apiVersion = "dapr.io/v2alpha1";
+	readonly attr String kind = "Subscription";
+	attr String name;
+	attr String topicName;
+	val RouteRules[*] routeRules;
+	attr String pubsubname;
+	attr String deadLetterTopic;
+	attr boolean bulkSubscribe_enabled;
+	attr String bulkSubscribe_maxMessagesCount;
+	attr String bulkSubscribe_maxAwaitDurationMs;
+	ref App[*] scopes;
+	
+}
+
+class RouteRules{
+	attr String match;
+	attr String path;
+}
+
+
+// Resiliency Configuration
+
+class ResiliencyConfiguration {
+	readonly attr String apiVersion = "dapr.io/v2alpha1";
+	readonly attr String kind = "Subscription";
+	attr String name;
+	ref App[*] scopes;
+	val ResiliencyPolicy policy;
+	val ResiliencyTarget[*] targets;
+}
+
+class ResiliencyPolicy{
+	val RetryPolicy[*] retries;
+	val CircuitBreakerPolicy[*] circuitbreakers;
+	val ResiliencyTimeout[*] timeouts;
+	
+}
+
+class ResiliencyTimeout{
+	attr String name;
+	attr String value;
+	
+}
+
+class RetryPolicy{
+	attr String name;
+	attr String policy_type;
+	attr String duration;
+	attr int maxRetries;
+}
+
+
+class CircuitBreakerPolicy{
+	attr String name;
+	attr int maxRequests;
+	attr String interval;
+	attr String timeout;
+	attr String trip;
+	
+}
+
+class ResiliencyTarget{
+	attr ResiliencyTargetType type;
+	attr String name;
+	val CircuitBreakerPolicy circuitBreaker;
+	val RetryPolicy retry;
+	attr int circuitBreakerCacheSize;
+	val ResiliencyTimeout timeout;
+	
+	
+}
+
+enum ResiliencyTargetType{
+	APP=1;
+	ACTOR=2;
+	COMPONENT_INBOUND=3;
+	COMPONENT_OUTBOUND=4;
+	
+}
+// HTTPEndpoint Configuration
+
+class HTTPEndPoint {
+	readonly attr String apiVersion = "dapr.io/v1alpha1";
+	readonly attr String kind = "HTTPEndpoint";
+	ref SecretStore auth;
+	attr String metadata_name;
+	attr String baseUrl;
+	ref App[*] scopes;
+	val SpecMetadata[*] headers; 
+	val SpecMetadata clientTLS_rootCA; 
+	val SpecMetadata clientTLS_certificate; 
+	val SpecMetadata clientTLS_privateKey; 	
+}
+
+
+
 //Component Definitions
 
 
@@ -195,27 +294,9 @@ class SpecMetadata{
 	attr String envRef;
 }
 
-// Subscription Configuration 
 
-class SubscriptionConfiguration{
-	readonly attr String apiVersion = "dapr.io/v2alpha1";
-	readonly attr String kind = "Subscription";
-	attr String name;
-	attr String topicName;
-	val RouteRules[*] routeRules;
-	attr String pubsubname;
-	attr String deadLetterTopic;
-	attr boolean bulkSubscribe_enabled;
-	attr String bulkSubscribe_maxMessagesCount;
-	attr String bulkSubscribe_maxAwaitDurationMs;
-	ref App[*] scopes;
-	
-}
 
-class RouteRules{
-	attr String match;
-	attr String path;
-}
+
 
 
 // Secret Stores 

@@ -5,6 +5,19 @@ package daprdesigner;
 
 
 // Base classes
+class DaprArchitecture {
+	attr String name;
+	val Environment[*] environments;
+	
+}
+
+class Environment{
+	attr String name;
+	val Namespace namespace;
+	val Trustdomain[*] trustdomain;
+	val BuildingBlock[*] buildingblocks;
+}
+
 
 class Namespace{
 	

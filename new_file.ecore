@@ -29,7 +29,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Services" eSuperTypes="#//BuildingBlock">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false" defaultValueLiteral="Services Group"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="apps" upperBound="-1" eType="#//App"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="apps" upperBound="-1" eType="#//App"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="App">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="appId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

@@ -4,6 +4,8 @@
 package daprdesigner;
 
 
+mapentry EStringToStringMapEntry : String -> String;
+
 // Base classes
 class DaprArchitecture {
 	attr String name;
@@ -154,8 +156,8 @@ class Operation{
 
 class MiddlewareConfiguration{
 	
-	val HttpHandler[*] incomingHandler; // httpPipeline
-	val HttpHandler[*] outgoingHandler; // appHttpPipeline  
+	val EStringToStringMapEntry[*] incomingHandler; // httpPipeline
+	val EStringToStringMapEntry[*] outgoingHandler; // appHttpPipeline  
 }
 
 class HttpHandler{
@@ -184,7 +186,7 @@ class SubscriptionConfiguration{
 	readonly attr String kind = "Subscription";
 	attr String name;
 	attr String topicName;
-	val RouteRules[*] routeRules;
+	val  EStringToStringMapEntry[*] routeRules;
 	attr String pubsubname;
 	attr String deadLetterTopic;
 	attr boolean bulkSubscribe_enabled;
@@ -214,7 +216,7 @@ class ResiliencyConfiguration {
 class ResiliencyPolicy{
 	val RetryPolicy[*] retries;
 	val CircuitBreakerPolicy[*] circuitbreakers;
-	val ResiliencyTimeout[*] timeouts;
+	val EStringToStringMapEntry[*] timeouts;
 	
 }
 
